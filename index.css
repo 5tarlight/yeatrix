@@ -1,0 +1,28 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    background-color: #232323;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.container {
+    display: flex;
+    background-color: white;
+    margin: 0 auto;
+    width: fit-content;
+    height: fit-content;
+}
+
+#canvas {
+    /* 10x20 */
+    width: 320px;
+    height: 640px;
+}
