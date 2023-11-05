@@ -31,4 +31,6 @@ body {
     color: lightgreen;
     font-size: 36px;
     margin: 1rem 0 0 1rem;
+    user-select: none;
+    cursor: default;
 }
