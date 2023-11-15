@@ -56,29 +56,6 @@ function calculateFps() {
     }
 }
 
-class Cell {
-    x
-    y
-    isAir
-    color
-
-    constructor(x, y, isAir, color) {
-        this.x = x
-        this.y = y
-        this.isAir = isAir
-        this.color = color
-    }
-
-    isBottom() {
-        if (this.y >= h - 1)
-            return true
-        else if (!map[this.x][this.y + 1].isAir)
-            return true
-
-        return false
-    }
-}
-
 function renderMap(ctx) {
     forEach((x, y) => {
         ctx.fillStyle = map[x][y].color
