@@ -6,6 +6,18 @@ const size = 32
 const w = 10
 const h = 20
 const map = []
+let stableMap = map
+let currentBlock
+let currentBlockType = 0
+const colorPreset = [
+    '#eb4034',
+    '#eb8934',
+    '#ebdb34',
+    '#92eb34',
+    '#03a9fc',
+    '#5534eb',
+    '#a834eb'
+]
 
 const white = '#ffffff'
 
@@ -69,10 +81,25 @@ function renderMap(ctx) {
     })
 }
 
+function playGame() {
+    if (!currentBlock)
+        summonBlock()
+}
+
+function summonBlock() {
+    currentBlock = new Block(4, 0, blocks[currentBlockType], colorPreset[currentBlockType])
+    currentBlockType++
+    if (currentBlockType === blocks.length)
+        currentBlockType = 0
+    currentBlock.applyMap()
+}
+
+
 function draw() {
     const ctx = canvas.getContext('2d')
     ctx.imageSmoothingEnabled = false
 
+    playGame()
     clearCanvas(ctx)
     drawGrid(ctx)
     renderMap(ctx)

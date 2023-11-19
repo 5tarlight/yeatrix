@@ -26,12 +26,14 @@ class Block {
     y
     shape
     rotation
+    color
 
-    constructor(x, y, shape) {
+    constructor(x, y, shape, color) {
         this.x = x
         this.y = y
         this.shape = shape
         this.rotation = 0
+        this.color = color
     }
 
     getShape() {
@@ -65,5 +67,17 @@ class Block {
         })
 
         return isBottom
+    }
+
+    applyMap() {
+        const s = this.getShape()
+        for (let i = 0; i < s.length; i++) {
+            for (let j = 0; j < s[0].length; j++) {
+                if (s[i][j] === 1) {
+                    map[this.x + i][this.y + j] = new Cell(this.x + i, this.y + j, false, this.color)
+                    console.log(this.x + i, this.y + j, this.color)
+                }
+            }
+        }
     }
 }
