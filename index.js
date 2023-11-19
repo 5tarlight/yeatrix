@@ -1,6 +1,7 @@
 let canvas
 let lastDrawTime = -1
 let fpsCounter
+let fps
 const size = 32
 const w = 10
 const h = 20
@@ -20,6 +21,8 @@ function init() {
     for (let i = 0; i < w; i++)
         map.push([])
     forEach((x, y) => map[x].push(new Cell(x, y, true, white)))
+
+    setInterval(updateFps, 500)
 
     requestAnimationFrame(draw)
 }
@@ -50,10 +53,13 @@ function calculateFps() {
         lastDrawTime = time
     else {
         const gap = time - lastDrawTime
-        const fps = Math.round(1 / gap * 1000)
-        fpsCounter.innerText = fps + ' FPS'
+        fps = Math.round(1 / gap * 1000)
         lastDrawTime = time
     }
+}
+
+function updateFps() {
+    fpsCounter.innerText = fps + ' FPS'
 }
 
 function renderMap(ctx) {

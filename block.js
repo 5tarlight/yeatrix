@@ -103,3 +103,5 @@ const b7 = [
         [0, 1],
     ]
 ]
+
+const blocks = [ b1, b2, b3, b4, b5, b6, b7 ]
