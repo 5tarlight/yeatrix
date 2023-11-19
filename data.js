@@ -47,6 +47,7 @@ class Block {
     }
 
     canGoDown() {
+        // BUG : THIS DOES NOT WORK WELL AS INTENDED!
         const s = this.getShape()
         const height = s.length - 1
         let isBottom = false

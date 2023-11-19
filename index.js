@@ -5,7 +5,7 @@ let fps
 const size = 32
 const w = 10
 const h = 20
-const map = []
+let map = []
 let stableMap = map
 let currentBlock
 let currentBlockType = 0
@@ -18,6 +18,7 @@ const colorPreset = [
     '#5534eb',
     '#a834eb'
 ]
+let downCool = 0
 
 const white = '#ffffff'
 
@@ -27,13 +28,22 @@ function forEach(func) {
             func(i, j)
 }
 
+function copyMapToStable() {
+    // Deep copy
+    stableMap = map.map(v => v.filter(() => true))
+}
+
+function resetMap() {
+    map = stableMap.map(v => v.filter(() => true))
+}
+
 function init() {
     canvas = document.getElementById('canvas')
     fpsCounter = document.getElementById('fps')
     for (let i = 0; i < w; i++)
         map.push([])
     forEach((x, y) => map[x].push(new Cell(x, y, true, white)))
-
+    copyMapToStable()
     setInterval(updateFps, 500)
 
     requestAnimationFrame(draw)
@@ -65,6 +75,7 @@ function calculateFps() {
         lastDrawTime = time
     else {
         const gap = time - lastDrawTime
+        downCool += gap
         fps = Math.round(1 / gap * 1000)
         lastDrawTime = time
     }
@@ -84,6 +95,8 @@ function renderMap(ctx) {
 function playGame() {
     if (!currentBlock)
         summonBlock()
+    else
+        downBlock()
 }
 
 function summonBlock() {
@@ -94,6 +107,19 @@ function summonBlock() {
     currentBlock.applyMap()
 }
 
+function downBlock() {
+    if (downCool >= 1000) {
+        downCool = 0;
+
+        if (!currentBlock.canGoDown()) {
+            currentBlock = null
+        } else {
+            currentBlock.y += 1
+            resetMap()
+            currentBlock.applyMap()
+        }
+    }
+}
 
 function draw() {
     const ctx = canvas.getContext('2d')
