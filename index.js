@@ -112,6 +112,7 @@ function downBlock() {
         downCool = 0;
 
         if (!currentBlock.canGoDown()) {
+            copyMapToStable()
             currentBlock = null
         } else {
             currentBlock.y += 1

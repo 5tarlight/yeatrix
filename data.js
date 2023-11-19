@@ -47,27 +47,18 @@ class Block {
     }
 
     canGoDown() {
-        // BUG : THIS DOES NOT WORK WELL AS INTENDED!
         const s = this.getShape()
-        const height = s.length - 1
-        let isBottom = false
-        s[height].forEach(c => {
-            if (isBottom || c === 0)
-                return
+        const width = s.length - 1
+        const height = s[0].length - 1
 
-            if (this.y + height >= h)
-                isBottom = true
-            else {
-                for (let i = 0; i < s[0].length; i++) {
-                    if (!map[this.x + i][this.y + height].isAir) {
-                        isBottom = true
-                        break
-                    }
-                }
+        for (let i = 0; i <= width; i++) {
+            if (s[i][height] === 1) {
+                if (map[this.x + i][this.y + height].isBottom())
+                    return false
             }
-        })
+        }
 
-        return isBottom
+        return true
     }
 
     applyMap() {
@@ -76,7 +67,6 @@ class Block {
             for (let j = 0; j < s[0].length; j++) {
                 if (s[i][j] === 1) {
                     map[this.x + i][this.y + j] = new Cell(this.x + i, this.y + j, false, this.color)
-                    console.log(this.x + i, this.y + j, this.color)
                 }
             }
         }
