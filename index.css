@@ -30,7 +30,28 @@ body {
 .fps-counter {
     color: lightgreen;
     font-size: 36px;
-    margin: 1rem 0 0 1rem;
     user-select: none;
     cursor: default;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+}
+
+.start-btn {
+    width: 5rem;
+    height: 3rem;
+    border: none;
+    font-size: 1.2rem;
+    background-color: #83d1fc;
+    border-radius: 3px;
+    transition: scale 50ms ease-in;
+}
+
+.start-btn:hover {
+    cursor: pointer;
+    background-color: #3eaaea;
+    scale: 1.05;
 }

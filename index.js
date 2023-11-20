@@ -2,6 +2,7 @@ let canvas
 let lastDrawTime = -1
 let fpsCounter
 let fps
+let startBtn
 const size = 32
 const w = 10
 const h = 20
@@ -20,6 +21,8 @@ const colorPreset = [
 ]
 let downCool = 0
 const downDelay = 100
+let pause = true
+let fpsInterval
 
 const white = '#ffffff'
 
@@ -41,13 +44,36 @@ function resetMap() {
 function init() {
     canvas = document.getElementById('canvas')
     fpsCounter = document.getElementById('fps')
+    startBtn = document.getElementById('start-btn')
+    startBtn.onclick = togglePause
     for (let i = 0; i < w; i++)
         map.push([])
     forEach((x, y) => map[x].push(new Cell(x, y, true, white)))
     copyMapToStable()
-    setInterval(updateFps, 500)
+    fpsInterval = setInterval(updateFps, 500)
 
-    requestAnimationFrame(draw)
+    if (!pause)
+        requestAnimationFrame(draw)
+}
+
+function togglePause() {
+    pause = !pause
+
+    if (!pause) { // play
+        resetGame()
+        init()
+        startBtn.innerText = '정지'
+    } else {
+        clearInterval(fpsInterval)
+        startBtn.innerText = '시작'
+    }
+}
+
+function resetGame() {
+    map = []
+    currentBlock = null
+    currentBlockType = 0
+    downCool = 0
 }
 
 function drawGrid(ctx) {
@@ -83,7 +109,7 @@ function calculateFps() {
 }
 
 function updateFps() {
-    fpsCounter.innerText = fps + ' FPS'
+    fpsCounter.innerText = (fps || 'NaN') + ' FPS'
 }
 
 function renderMap(ctx) {
@@ -133,7 +159,9 @@ function draw() {
     renderMap(ctx)
 
     calculateFps()
-    requestAnimationFrame(draw)
+
+    if (!pause)
+        requestAnimationFrame(draw)
 }
 
 document.addEventListener('DOMContentLoaded', init)
