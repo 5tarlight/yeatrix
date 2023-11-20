@@ -3,12 +3,14 @@ class Cell {
     y
     isAir
     color
+    id
 
-    constructor(x, y, isAir, color) {
+    constructor(x, y, isAir, color, id = -1) {
         this.x = x
         this.y = y
         this.isAir = isAir
         this.color = color
+        this.id = id
     }
 
     isBottom() {
@@ -52,8 +54,10 @@ class Block {
         const height = s[0].length - 1
 
         for (let i = 0; i <= width; i++) {
-            if (s[i][height] === 1) {
-                if (map[this.x + i][this.y + height].isBottom())
+            for (let j = 0; j <= height; j++) {
+                if (this.y + j === h - 1)
+                    return false
+                else if (!stableMap[this.x + i][this.y + j + 1].isAir)
                     return false
             }
         }

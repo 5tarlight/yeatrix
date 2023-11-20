@@ -19,6 +19,7 @@ const colorPreset = [
     '#a834eb'
 ]
 let downCool = 0
+const downDelay = 100
 
 const white = '#ffffff'
 
@@ -108,7 +109,7 @@ function summonBlock() {
 }
 
 function downBlock() {
-    if (downCool >= 1000) {
+    if (downCool >= downDelay) {
         downCool = 0;
 
         if (!currentBlock.canGoDown()) {
